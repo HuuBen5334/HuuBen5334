@@ -1,8 +1,7 @@
-- 👋 Hi, I’m @HuuBen5334
+- 👋 Hi, I’m Ben
 - 👀 I’m interested in improving myself in order to help improve the world around me.
 - 🌱 I’m currently learning Computer engineering
 - 📫 How to reach me: benn5334@gmail.com
-- 😄 Pronouns: He/Him
 - ⚡ Fun fact: I enjoy playing tennis.
 
 <!---
