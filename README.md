@@ -16,6 +16,8 @@ An interactive aquatic simulation sandbox that simulates real-world steering beh
 - Utilizes steering algorithms such as pursuit, obstacle avoidance, and flocking.
 - Users define the steering parameters and are able visualize the effects of those changes.
 
+  
+🔗 [View Repository](https://github.com/HuuBen5334/FishSchooling)
 ## 🛠️ Tech Stack
 
 ![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
@@ -23,6 +25,7 @@ An interactive aquatic simulation sandbox that simulates real-world steering beh
 ![.NET](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+
 
 ## 📫 Connect with Me!
 Phone: (239) 888-0663
