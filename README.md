@@ -1,6 +1,6 @@
 # 👋 Hi, I'm Ben Nguyen
 
-**🎓Computer Engineering @ University of Florida. 🐊**
+**🎓Computer Engineering Student at The University of Florida. 🐊**
 
 Specialized in embedded systems and low-level software. <br>
 I enjoy taking on tasks that challenge me in new ways. <br> Passionate about creating efficient and optimized devices.
