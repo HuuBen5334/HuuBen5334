@@ -83,43 +83,39 @@ Each tier is independently runnable and speaks a purpose-fit protocol: **REST** 
 
 ## ⭐ Engineering Highlights
 
-These are the parts I'm most proud of — where the interesting problems lived.
-
 ### 1. Surviving concurrent checkout
 
-A 50-user concurrent checkout load test exposed an **`ObjectOptimisticLockingFailureException` failure rate of ~96%** — dozens of users colliding on the same product's stock row.
+A 50-user load test exposed a **~96% `ObjectOptimisticLockingFailureException` rate** — users colliding on the same stock row. The layered fix:
 
-The fix was layered, not a band-aid:
+- **`@Version` optimistic locking** on `Product` prevents silent overwrites of stock decrements.
+- **`@Retryable` with backoff** (3 attempts, 50 → 100 ms) wraps *outside* the transaction so each retry runs fresh — ordering pinned via `TransactionConfig`.
+- **FK indexes** on `product_order.product_id` and `user_id` keep order writes fast.
 
-- **`@Version` optimistic locking** on `Product` so no two transactions can silently overwrite each other's stock decrement.
-- **`@Retryable` with exponential backoff** (3 attempts, 50 ms → 100 ms) wrapped *outside* the transaction so each retry runs in a **fresh transaction** — proxy ordering enforced explicitly via `TransactionConfig`.
-- **FK indexes** added on `product_order.product_id` and `product_order.user_id` to keep order writes fast as volume grew.
+Result: contention is absorbed and the same test passes cleanly.
 
-The result: contention is absorbed gracefully and the same load test passes cleanly.
-
-> **Why optimistic over pessimistic?** Optimistic locking wins on throughput in the general case. Pessimistic locking would be the right call only under sustained flash-sale contention — a tradeoff I made consciously and documented rather than defaulted into.
+> **Optimistic over pessimistic** wins on throughput in the general case; pessimistic is only worth it under sustained flash-sale contention — a deliberate, documented tradeoff.
 
 ### 2. A C++ pricing microservice over gRPC
 
-Pricing logic lives in a **multi-threaded C++ service** (`:50051`) instead of the JVM:
+Pricing runs in a **multi-threaded C++ service** (`:50051`), not the JVM:
 
-- Two RPCs — `GetPrice` (bulk-discount + scarcity-surge model) and `UpdateDiscount` (per-product admin override).
-- A `std::shared_mutex` guards the discount-override map: many concurrent readers on the price path, exclusive writers only on admin updates.
-- The backend calls it via a generated `PricingServiceBlockingStub` *before* snapshotting `priceAtPurchase`, so every order captures the exact price the customer saw.
+- Two RPCs — `GetPrice` (bulk-discount + scarcity-surge) and `UpdateDiscount` (admin override).
+- A `std::shared_mutex` guards the override map: concurrent readers on the price path, exclusive writers on updates.
+- The backend calls it via `PricingServiceBlockingStub` *before* snapshotting `priceAtPurchase`, so each order captures the exact price shown.
 
 ### 3. Real-time order notifications
 
-The moment an order is placed, the customer sees it — no polling:
+No polling — orders surface instantly:
 
-- STOMP broker on `/topic`, customers subscribe to `/topic/orders/user/{userId}`.
-- The React client connects through `@stomp/stompjs` + `sockjs-client` and renders a live feed.
-- Payload is a typed Java `record` (`OrderUpdateMessage`) serialized to JSON.
+- STOMP broker on `/topic`; clients subscribe to `/topic/orders/user/{userId}`.
+- React client connects via `@stomp/stompjs` + `sockjs-client`.
+- Payload is a typed Java `record` (`OrderUpdateMessage`) → JSON.
 
-### 4. Tested at the layer that matters
+### 4. Tested where it matters
 
 - **Mockito unit tests** isolate `ProductOrderService` (mocked gRPC stub + notifier).
-- **`@WebMvcTest` slice tests** cover the controller/HTTP contract.
-- **Full `@SpringBootTest` WebSocket integration test** spins up a real STOMP client over SockJS against an H2 DB and asserts message delivery within a 5 s budget.
+- **`@WebMvcTest`** covers the controller/HTTP contract.
+- **`@SpringBootTest` integration test** runs a real STOMP client over SockJS against H2, asserting delivery within 5 s.
 
 ---
 
