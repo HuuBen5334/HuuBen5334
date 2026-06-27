@@ -5,6 +5,12 @@
 Specialized in embedded systems and low-level software. <br>
 I enjoy taking on tasks that challenge me in new ways. <br> Passionate about creating efficient and optimized devices.
 
+## 📫 Connect with Me!
+Phone: (239) 888-0663
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/nguyenhuuben)
+[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:benn5334@gmail.com)
+
 ## Featured Projects
 <h1 align="center">🛒 E-Commerce Platform</h1>
 
@@ -172,7 +178,7 @@ The moment an order is placed, the customer sees it — no polling:
 </details>
 
 ---
-### 🐟 Fish Schooling
+### <h1 align="center">🐟 Fish Schooling</h1>
 An interactive aquatic simulation sandbox that simulates real-world steering behaviors in a fun and playful manner.
 
 ![FishSchooling](https://github.com/user-attachments/assets/1bac9d65-154a-4b03-9257-5d022f44e2a8)
