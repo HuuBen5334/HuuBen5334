@@ -183,7 +183,9 @@ An interactive 2D ocean sandbox built in Godot 4 + C# that brings autonomous ste
   <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
 </p>
 
-![FishSchooling](https://github.com/user-attachments/assets/1bac9d65-154a-4b03-9257-5d022f44e2a8)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/1bac9d65-154a-4b03-9257-5d022f44e2a8" alt="FishSchooling" />
+</p>
 
 **Features:**
 - **5 distinct creature types** — Nemo (schooling fish), Sharks, Starfish, Eels, and Orcas — each with a unique behavior loadout and role in the ecosystem
