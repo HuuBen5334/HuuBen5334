@@ -28,10 +28,6 @@ Phone: (239) 888-0663
   <img src="https://img.shields.io/badge/Locust-load_tested-2EAE5A?style=for-the-badge&logo=locust&logoColor=white" alt="Locust"/>
 </p>
 
-🔗 [View Repo](https://github.com/HuuBen5334/ecommerce-fullstack) 
-
----
-
 ## 🎬 Demo
 
 <img width="1306" alt="E-commerce platform demo" src="https://github.com/user-attachments/assets/1d1935ba-ca4e-4035-9b00-263c9370942f" />
@@ -179,6 +175,14 @@ No polling — orders surface instantly:
 
 An interactive 2D ocean sandbox built in Godot 4 + C# that brings autonomous steering behaviors to life through a full predator-prey ecosystem. Spawn different sea creatures, tune their behavior parameters in real time, and watch emergent dynamics unfold — schools scatter, predators intercept, and eels guard their territory.
 
+<p align="center">
+  <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#"/>
+  <img src="https://img.shields.io/badge/Godot-478CBF?style=for-the-badge&logo=godot-engine&logoColor=white" alt="Godot"/>
+  <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET"/>
+  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git"/>
+  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
+</p>
+
 ![FishSchooling](https://github.com/user-attachments/assets/1bac9d65-154a-4b03-9257-5d022f44e2a8)
 
 **Features:**
@@ -190,15 +194,6 @@ An interactive 2D ocean sandbox built in Godot 4 + C# that brings autonomous ste
 - **Debug visualization system** — toggle force-vector arrows per fish with 11 color-coded behavior channels (green = alignment, red = separation, magenta = flee, orange = pursuit, etc.) to inspect decision-making in real time
 - **Dynamic spawning & census** — spawn up to 110 Nemo, 20 Sharks, 50 Starfish, 30 Eels, and 20 Orcas; live population counter updates as predators hunt prey
 - **Screen-wrap world** with static rock obstacles that all fish pathfind around using urgency-scaled repulsion forces
-
-🔗 [View Repository](https://github.com/HuuBen5334/FishSchooling)
-## 🛠️ Tech Stack
-
-![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
-![Godot](https://img.shields.io/badge/Godot-478CBF?style=for-the-badge&logo=godot-engine&logoColor=white)
-![.NET](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 
 
 ## 📫 Connect with Me!
