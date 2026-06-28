@@ -14,9 +14,7 @@ Phone: (239) 888-0663
 ## Featured Projects
 <h2 align="center">🛒 E-Commerce Platform 🔗 <a href="https://github.com/HuuBen5334/ecommerce-fullstack">View Repo</a></h2>
 
-<p align="center">
-  <em>A full-stack, polyglot commerce backend engineered for correctness under concurrency — from a C++ pricing microservice up through a real-time React storefront.</em>
-</p>
+A full-stack, commerce backend engineered for correctness under concurrency using a C++ pricing microservice up through a real-time React storefront.
 
 <p align="center">
   <img src="https://img.shields.io/badge/Java-21-007396?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21"/>
