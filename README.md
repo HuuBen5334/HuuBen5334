@@ -6,10 +6,7 @@ Specialized in embedded systems and low-level software. <br>
 I enjoy taking on tasks that challenge me in new ways. <br> Passionate about creating efficient and optimized devices.
 
 ## 📫 Connect with Me!
-Phone: (239) 888-0663
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/nguyenhuuben)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:benn5334@gmail.com)
+Phone: (239) 888-0663 | [LinkedIn](www.linkedin.com/in/nguyenhuuben) | [Email](benn5334@gmail.com)
 
 ## Featured Projects
 <h2 align="center">🛒 E-Commerce Platform 🔗 <a href="https://github.com/HuuBen5334/ecommerce-fullstack">View Repo</a></h2>
