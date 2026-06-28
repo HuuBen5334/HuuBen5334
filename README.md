@@ -74,39 +74,39 @@ Each tier is independently runnable and speaks a purpose-fit protocol: **REST** 
 
 ## ⭐ Engineering Highlights
 
-### 1. Surviving concurrent checkout
+### 1. Handling concurrent checkouts
 
-A 50-user load test exposed a **~96% `ObjectOptimisticLockingFailureException` rate** — users colliding on the same stock row. The layered fix:
+A 50-user load test produced a ~96% `ObjectOptimisticLockingFailureException` rate, caused by concurrent updates to the same product's stock row. Fixed in a few layers:
 
-- **`@Version` optimistic locking** on `Product` prevents silent overwrites of stock decrements.
-- **`@Retryable` with backoff** (3 attempts, 50 → 100 ms) wraps *outside* the transaction so each retry runs fresh — ordering pinned via `TransactionConfig`.
-- **FK indexes** on `product_order.product_id` and `user_id` keep order writes fast.
+- **`@Version` optimistic locking** on `Product` prevents two transactions from overwriting each other's stock updates.
+- **`@Retryable` with backoff** (3 attempts, 50 → 100 ms) wraps the order logic outside the transaction so each retry runs in a fresh one. Proxy order is set in `TransactionConfig`.
+- **FK indexes** on `product_order.product_id` and `user_id` speed up order writes.
 
-Result: contention is absorbed and the same test passes cleanly.
+The same load test passes after these changes.
 
-> **Optimistic over pessimistic** wins on throughput in the general case; pessimistic is only worth it under sustained flash-sale contention — a deliberate, documented tradeoff.
+Optimistic locking was chosen over pessimistic for better throughput in the general case; pessimistic locking is only better under heavy flash-sale contention.
 
-### 2. A C++ pricing microservice over gRPC
+### 2. C++ pricing microservice over gRPC
 
-Pricing runs in a **multi-threaded C++ service** (`:50051`), not the JVM:
+Pricing logic runs in a separate multi-threaded C++ service (`:50051`) rather than the JVM:
 
-- Two RPCs — `GetPrice` (bulk-discount + scarcity-surge) and `UpdateDiscount` (admin override).
-- A `std::shared_mutex` guards the override map: concurrent readers on the price path, exclusive writers on updates.
-- The backend calls it via `PricingServiceBlockingStub` *before* snapshotting `priceAtPurchase`, so each order captures the exact price shown.
+- Two RPCs — `GetPrice` (bulk discounts + scarcity surge) and `UpdateDiscount` (admin override).
+- A `std::shared_mutex` protects the override map, allowing concurrent reads on the price path and exclusive writes on updates.
+- The backend calls it via `PricingServiceBlockingStub` before saving `priceAtPurchase`, so each order records the exact price shown.
 
 ### 3. Real-time order notifications
 
-No polling — orders surface instantly:
+Orders update without frontend polling:
 
 - STOMP broker on `/topic`; clients subscribe to `/topic/orders/user/{userId}`.
-- React client connects via `@stomp/stompjs` + `sockjs-client`.
-- Payload is a typed Java `record` (`OrderUpdateMessage`) → JSON.
+- The React client connects with `@stomp/stompjs` + `sockjs-client`.
+- The payload is a Java `record` (`OrderUpdateMessage`) sent as JSON.
 
-### 4. Tested where it matters
+### 4. Testing
 
-- **Mockito unit tests** isolate `ProductOrderService` (mocked gRPC stub + notifier).
-- **`@WebMvcTest`** covers the controller/HTTP contract.
-- **`@SpringBootTest` integration test** runs a real STOMP client over SockJS against H2, asserting delivery within 5 s.
+- **Mockito unit tests** for `ProductOrderService`, with the gRPC stub and notifier mocked.
+- **`@WebMvcTest`** for the controller / HTTP layer.
+- A **`@SpringBootTest` integration test** that runs a real STOMP client over SockJS against H2 and checks message delivery within 5 seconds.
 
 ---
 
