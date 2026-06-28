@@ -12,7 +12,7 @@ Phone: (239) 888-0663
 [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:benn5334@gmail.com)
 
 ## Featured Projects
-<h1 align="center">🛒 E-Commerce Platform</h1>
+<h2 align="center">🛒 E-Commerce Platform 🔗 <a href="https://github.com/HuuBen5334/ecommerce-fullstack">View Repo</a></h2>
 
 <p align="center">
   <em>A full-stack, polyglot commerce backend engineered for correctness under concurrency — from a C++ pricing microservice up through a real-time React storefront.</em>
@@ -174,16 +174,23 @@ No polling — orders surface instantly:
 </details>
 
 ---
-### <h1 align="center">🐟 Fish Schooling</h1>
-An interactive aquatic simulation sandbox that simulates real-world steering behaviors in a fun and playful manner.
+
+### <h2 align="center">🐟 Fish Schooling 🔗 <a href="https://github.com/HuuBen5334/FishSchooling">View Repo</a></h2>
+
+An interactive 2D ocean sandbox built in Godot 4 + C# that brings autonomous steering behaviors to life through a full predator-prey ecosystem. Spawn different sea creatures, tune their behavior parameters in real time, and watch emergent dynamics unfold — schools scatter, predators intercept, and eels guard their territory.
 
 ![FishSchooling](https://github.com/user-attachments/assets/1bac9d65-154a-4b03-9257-5d022f44e2a8)
 
 **Features:**
-- Utilizes steering algorithms such as pursuit, obstacle avoidance, and flocking.
-- Users define the steering parameters and are able visualize the effects of those changes.
+- **5 distinct creature types** — Nemo (schooling fish), Sharks, Starfish, Eels, and Orcas — each with a unique behavior loadout and role in the ecosystem
+- **11 modular steering behaviors** built on a weighted `ISteeringBehavior` interface: Alignment, Cohesion, Separation, Pursuit, Interception (predictive), Flee, Path Following, Home Guard, Territory Defense, Wander, and Obstacle Avoidance
+- **Classic Reynolds flocking** (Alignment + Cohesion + Separation) drives schooling fish, while predators use either direct pursuit or velocity-prediction interception
+- **Territorial AI** — Eels maintain a home position and aggressively defend a radius around it; Orcas act as apex predators that hunt both Nemo and Eels using predictive movement
+- **Live parameter control** — sliders apply to all existing fish instantly: adjust separation radius to tighten/loosen schools, tune predator hunt range, or change max speed mid-simulation
+- **Debug visualization system** — toggle force-vector arrows per fish with 11 color-coded behavior channels (green = alignment, red = separation, magenta = flee, orange = pursuit, etc.) to inspect decision-making in real time
+- **Dynamic spawning & census** — spawn up to 110 Nemo, 20 Sharks, 50 Starfish, 30 Eels, and 20 Orcas; live population counter updates as predators hunt prey
+- **Screen-wrap world** with static rock obstacles that all fish pathfind around using urgency-scaled repulsion forces
 
-  
 🔗 [View Repository](https://github.com/HuuBen5334/FishSchooling)
 ## 🛠️ Tech Stack
 
