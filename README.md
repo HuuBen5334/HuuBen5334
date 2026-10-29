@@ -21,6 +21,9 @@
       <p align="center">
         <a href="https://huuben5334.github.io/">
           <img src="./speaker.jpg" alt="Portable Bluetooth Speaker" width="100%"/>
+          <img width="654" height="486" alt="robo" src="https://github.com/user-attachments/assets/cddfeab6-d0bc-43b2-8d10-39b8618c5ba4" />
+          <img width="2000" height="1500" alt="speaker" src="https://github.com/user-attachments/assets/55a39818-092c-4d7c-bc0d-0c3b90ab209c" />
+
         </a>
       </p>
       <p>
