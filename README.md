@@ -20,10 +20,7 @@
       <h3 align="center">🔊 Portable Bluetooth Speaker</h3>
       <p align="center">
         <a href="https://huuben5334.github.io/">
-          <img src="./speaker.jpg" alt="Portable Bluetooth Speaker" width="100%"/>
-          <img width="654" height="486" alt="robo" src="https://github.com/user-attachments/assets/cddfeab6-d0bc-43b2-8d10-39b8618c5ba4" />
-          <img width="2000" height="1500" alt="speaker" src="https://github.com/user-attachments/assets/55a39818-092c-4d7c-bc0d-0c3b90ab209c" />
-
+          <img src="https://github.com/user-attachments/assets/c8ebdb1b-2870-409e-8d10-a3985adae2c2" alt="Portable Bluetooth Speaker" width="100%"/>
         </a>
       </p>
       <p>
@@ -73,7 +70,7 @@
       <h3 align="center">🤖 Robocode Tournament AI</h3>
       <p align="center">
         <a href="https://github.com/HuuBen5334/Robocode">
-          <img src="./robo.gif" alt="Robocode Tournament AI Demo" width="100%"/>
+          <img src="https://github.com/user-attachments/assets/cddfeab6-d0bc-43b2-8d10-39b8618c5ba4" alt="Robocode Tournament AI Demo" width="100%"/>
         </a>
       </p>
       <p>
