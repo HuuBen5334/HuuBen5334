@@ -39,40 +39,7 @@ Getting that right meant deliberately reaching past a single language and a sing
 
 ---
 
-## 🏗️ Architecture
-
-```mermaid
-flowchart LR
-    subgraph Client["🖥️ React 19 Storefront :3000"]
-        UI[Marketplace + Cart]
-        WS_C[STOMP / SockJS client]
-    end
-
-    subgraph Backend["☕ Spring Boot API :8080"]
-        CTRL[REST Controllers]
-        SVC["ProductOrderService@Retryable + @Transactional"]
-        WS_S[STOMP Broker /topic]
-    end
-
-    subgraph Pricing["⚙️ C++ Pricing Engine :50051"]
-        GRPC["gRPC serverbulk discount + scarcity surge"]
-    end
-
-    DB[("🐘 PostgreSQLoptimistic lock @Version")]
-
-    UI -->|REST /products /orders| CTRL
-    CTRL --> SVC
-    SVC -->|"GetPrice (gRPC)"| GRPC
-    SVC -->|"JPA / Hibernate"| DB
-    SVC -->|push order update| WS_S
-    WS_S -.->|"/topic/orders/user/{id}"| WS_C
-```
-
-Each tier is independently runnable and speaks a purpose-fit protocol: **REST** for the storefront, **gRPC** for low-latency internal pricing calls, and **STOMP-over-WebSocket** for server-pushed order events.
-
----
-
-## ⭐ Engineering Highlights
+## ⭐ Highlights
 
 ### 1. Handling concurrent checkouts
 
