@@ -1,164 +1,114 @@
-# 👋 Hi, I'm Ben Nguyen
-
-**🎓Computer Engineering Student at The University of Florida. 🐊**
-
-Specialized in embedded systems and low-level software. <br>
-I enjoy taking on tasks that challenge me in new ways. <br> Passionate about creating efficient and optimized devices.
-
-## 📫 Connect with Me!
-Phone: (239) 888-0663 | BenN5334@gmail.com | [LinkedIn](https://www.linkedin.com/in/nguyenhuuben)
-
-## Featured Projects
-<h2 align="center">🛒 E-Commerce Platform 🔗 <a href="https://github.com/HuuBen5334/ecommerce-fullstack">View Repo</a></h2>
-
-A full-stack, commerce backend engineered for correctness under concurrency using a C++ pricing microservice up through a real-time React storefront.
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Java-21-007396?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21"/>
-  <img src="https://img.shields.io/badge/Spring_Boot-3.5-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot"/>
-  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
-  <img src="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=cplusplus&logoColor=white" alt="C++"/>
-  <img src="https://img.shields.io/badge/gRPC-244c5a?style=for-the-badge&logo=grpc&logoColor=white" alt="gRPC"/>
-  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React 19"/>
-  <img src="https://img.shields.io/badge/Locust-load_tested-2EAE5A?style=for-the-badge&logo=locust&logoColor=white" alt="Locust"/>
-</p>
-
-## 🎬 Demo
-
-<img width="1306" alt="E-commerce platform demo" src="https://github.com/user-attachments/assets/1d1935ba-ca4e-4035-9b00-263c9370942f" />
+<div align="center">
+  <h1>🎓 Computer Engineering @ University of Florida</h1>
+  <p><strong>RTOS • System Design • Embedded Systems • PCB Design</strong></p>
+  
+  <p>
+    Phone: (239) 888-0663 | BenN5334@gmail.com | https://www.linkedin.com/in/nguyenhuuben
+  </p>
+  <p>
+    Portfolio: https://huuben5334.github.io/
+  </p>
+</div>
 
 ---
 
-## 📖 Overview
+<h2 align="center">🚀 Featured Projects</h2>
 
-This project is a production-shaped e-commerce backend with a complete storefront on top of it. It started as a CRUD REST API and grew into a **four-tier distributed system** built to answer one hard question that every real marketplace faces:
-
-> **What happens when 50 people try to buy the last item at the same time?**
-
-Getting that right meant deliberately reaching past a single language and a single process — a **C++ pricing engine** for hot-path dynamic pricing, **optimistic locking with automatic retry** for inventory integrity, a **WebSocket layer** for live order updates, and a **Locust load-test harness** to prove it all holds up under real concurrency rather than assuming it does.
-
----
-
-## ⭐ Highlights
-
-### 1. Handling concurrent checkouts
-
-A 50-user load test produced a ~96% `ObjectOptimisticLockingFailureException` rate, caused by concurrent updates to the same product's stock row. Fixed in a few layers:
-
-- **`@Version` optimistic locking** on `Product` prevents two transactions from overwriting each other's stock updates.
-- **`@Retryable` with backoff** (3 attempts, 50 → 100 ms) wraps the order logic outside the transaction so each retry runs in a fresh one. Proxy order is set in `TransactionConfig`.
-- **FK indexes** on `product_order.product_id` and `user_id` speed up order writes.
-
-The same load test passes after these changes.
-
-Optimistic locking was chosen over pessimistic for better throughput in the general case; pessimistic locking is only better under heavy flash-sale contention.
-
-### 2. C++ pricing microservice over gRPC
-
-Pricing logic runs in a separate multi-threaded C++ service (`:50051`) rather than the JVM:
-
-- Two RPCs — `GetPrice` (bulk discounts + scarcity surge) and `UpdateDiscount` (admin override).
-- A `std::shared_mutex` protects the override map, allowing concurrent reads on the price path and exclusive writes on updates.
-- The backend calls it via `PricingServiceBlockingStub` before saving `priceAtPurchase`, so each order records the exact price shown.
-
-### 3. Real-time order notifications
-
-Orders update without frontend polling:
-
-- STOMP broker on `/topic`; clients subscribe to `/topic/orders/user/{userId}`.
-- The React client connects with `@stomp/stompjs` + `sockjs-client`.
-- The payload is a Java `record` (`OrderUpdateMessage`) sent as JSON.
-
-### 4. Testing
-
-- **Mockito unit tests** for `ProductOrderService`, with the gRPC stub and notifier mocked.
-- **`@WebMvcTest`** for the controller / HTTP layer.
-- A **`@SpringBootTest` integration test** that runs a real STOMP client over SockJS against H2 and checks message delivery within 5 seconds.
-
----
-
-## 🧰 Tech Stack
-
-| Layer | Technology |
-|---|---|
-| **API** | Spring Boot 3.5 · Java 21 · Spring Data JPA (Hibernate) |
-| **Resilience** | Spring Retry · Spring AOP · optimistic locking (`@Version`) |
-| **Database** | PostgreSQL · `BigDecimal` money · FK + PK indexing |
-| **Pricing service** | C++ · gRPC · Protocol Buffers · `std::shared_mutex` |
-| **Real-time** | STOMP · SockJS · in-memory `SimpleBroker` |
-| **Frontend** | React 19 · React Router 7 · custom hooks · `React.memo` + lazy/`Suspense` |
-| **Load testing** | Locust |
-
----
-
-## 🔌 API Reference
-
-<details>
-<summary><strong>Products — <code>/products</code></strong></summary>
-
-| Method | Path | Status |
-|--------|------|--------|
-| GET | `/products` | 200 |
-| GET | `/products/{id}` | 200 / 404 |
-| POST | `/products` | 201 |
-| PUT | `/products/{id}` | 200 / 404 |
-| DELETE | `/products/{id}` | 204 / 409 *(FK conflict)* |
-</details>
-
-<details>
-<summary><strong>Users — <code>/users</code></strong></summary>
-
-| Method | Path | Status |
-|--------|------|--------|
-| GET | `/users` | 200 |
-| GET | `/users/{id}` | 200 / 404 |
-| POST | `/users` | 201 |
-| PUT | `/users/{id}` | 200 / 404 |
-| DELETE | `/users/{id}` | 204 / 409 *(FK conflict)* |
-</details>
-
-<details>
-<summary><strong>Orders — <code>/orders</code></strong></summary>
-
-| Method | Path | Status |
-|--------|------|--------|
-| GET | `/orders` | 200 |
-| GET | `/orders/{id}` | 200 / 404 |
-| POST | `/orders?productId=&userId=&quantity=` | 201 *(→ `ProductOrderService`)* |
-| PUT | `/orders/{id}` | 200 / 404 |
-| DELETE | `/orders/{id}` | 204 |
-
-**WebSocket:** subscribe to `/topic/orders/user/{userId}` → receives `{ orderId, userId, status, priceAtPurchase }` after each `placeOrder()`.
-</details>
-
----
-
-### <h2 align="center">🐟 Fish Schooling 🔗 <a href="https://github.com/HuuBen5334/FishSchooling">View Repo</a></h2>
-
-An interactive 2D ocean sandbox built in Godot 4 + C# that brings autonomous steering behaviors to life through a full predator-prey ecosystem. Spawn different sea creatures, tune their behavior parameters in real time, and watch emergent dynamics unfold — schools scatter, predators intercept, and eels guard their territory.
-
-<p align="center">
-  <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#"/>
-  <img src="https://img.shields.io/badge/Godot-478CBF?style=for-the-badge&logo=godot-engine&logoColor=white" alt="Godot"/>
-  <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET"/>
-  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git"/>
-  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
-</p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/1bac9d65-154a-4b03-9257-5d022f44e2a8" alt="FishSchooling" />
-</p>
-
-**Features:**
-- **5 distinct creature types** — Nemo (schooling fish), Sharks, Starfish, Eels, and Orcas — each with a unique behavior loadout and role in the ecosystem
-- **11 modular steering behaviors** built on a weighted `ISteeringBehavior` interface: Alignment, Cohesion, Separation, Pursuit, Interception (predictive), Flee, Path Following, Home Guard, Territory Defense, Wander, and Obstacle Avoidance
-- **Classic Reynolds flocking** (Alignment + Cohesion + Separation) drives schooling fish, while predators use either direct pursuit or velocity-prediction interception
-- **Territorial AI** — Eels maintain a home position and aggressively defend a radius around it; Orcas act as apex predators that hunt both Nemo and Eels using predictive movement
-- **Live parameter control** — sliders apply to all existing fish instantly: adjust separation radius to tighten/loosen schools, tune predator hunt range, or change max speed mid-simulation
-- **Debug visualization system** — toggle force-vector arrows per fish with 11 color-coded behavior channels (green = alignment, red = separation, magenta = flee, orange = pursuit, etc.) to inspect decision-making in real time
-- **Dynamic spawning & census** — spawn up to 110 Nemo, 20 Sharks, 50 Starfish, 30 Eels, and 20 Orcas; live population counter updates as predators hunt prey
-- **Screen-wrap world** with static rock obstacles that all fish pathfind around using urgency-scaled repulsion forces
-
-
-## 📫 Connect with Me!
-Phone: (239) 888-0663 | BenN5334@gmail.com | [LinkedIn](https://www.linkedin.com/in/nguyenhuuben)
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3 align="center">🔊 Portable Bluetooth Speaker</h3>
+      <p align="center">
+        <a href="https://huuben5334.github.io/">
+          <img src="./speaker.jpg" alt="Portable Bluetooth Speaker" width="100%"/>
+        </a>
+      </p>
+      <p>
+        <strong>Hardware • 2026</strong><br/>
+        A battery-powered speaker built around a custom 2-layer PCB designed in Altium, integrating an ESP32 with dual MAX98357A class-D amplifiers. C++ firmware (Arduino framework) streams Bluetooth audio over I2S to dual 5W speakers, with hardware interrupts and debouncing for tactile controls, real-time LCD playback metadata, and a 3D-printed SolidWorks enclosure.
+      </p>
+      <p align="center">
+        <img src="https://img.shields.io/badge/C++-00599C?style=flat-square&logo=cplusplus&logoColor=white"/>
+        <img src="https://img.shields.io/badge/ESP32-E7352C?style=flat-square&logo=espressif&logoColor=white"/>
+        <img src="https://img.shields.io/badge/Altium-A5915F?style=flat-square&logo=altiumdesigner&logoColor=white"/>
+        <img src="https://img.shields.io/badge/SolidWorks-DA291C?style=flat-square&logo=dassaultsystemes&logoColor=white"/>
+      </p>
+      <p align="center">
+        <a href="https://huuben5334.github.io/">
+          <img src="https://img.shields.io/badge/Design_Report-0066CC?style=for-the-badge&logo=readthedocs&logoColor=white" alt="Design Report"/>
+        </a>
+      </p>
+    </td>
+    <td width="50%" valign="top">
+      <h3 align="center">🛒 Full-Stack E-Commerce Marketplace</h3>
+      <p align="center">
+        <a href="https://github.com/HuuBen5334/ecommerce-fullstack">
+          <img src="https://github.com/user-attachments/assets/1d1935ba-ca4e-4035-9b00-263c9370942f" alt="E-Commerce Marketplace Demo" width="100%"/>
+        </a>
+      </p>
+      <p>
+        <strong>Distributed Systems • 2026</strong><br/>
+        An e-commerce marketplace built with React, Spring Boot, and PostgreSQL, featuring a custom C++ gRPC microservice for real-time dynamic pricing. Optimistic locking eliminated a 96% order-failure rate during high-traffic load testing, real-time order notifications are delivered over STOMP-over-WebSocket, and the system is validated with Mockito unit tests.
+      </p>
+      <p align="center">
+        <img src="https://img.shields.io/badge/Java_21-007396?style=flat-square&logo=openjdk&logoColor=white"/>
+        <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white"/>
+        <img src="https://img.shields.io/badge/C++-00599C?style=flat-square&logo=cplusplus&logoColor=white"/>
+        <img src="https://img.shields.io/badge/gRPC-244c5a?style=flat-square&logo=grpc&logoColor=white"/>
+        <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white"/>
+        <img src="https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black"/>
+      </p>
+      <p align="center">
+        <a href="https://github.com/HuuBen5334/ecommerce-fullstack">
+          <img src="https://img.shields.io/badge/View_Code-181717?style=for-the-badge&logo=github&logoColor=white" alt="View Code"/>
+        </a>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3 align="center">🤖 Robocode Tournament AI</h3>
+      <p align="center">
+        <a href="https://github.com/HuuBen5334/Robocode">
+          <img src="./robo.gif" alt="Robocode Tournament AI Demo" width="100%"/>
+        </a>
+      </p>
+      <p>
+        <strong>1st of 26 Competitors • +91% vs. Benchmark</strong><br/>
+        An autonomous Java tank AI driven by a finite-state machine (scan/attack/evade) for targeting and firepower. A minimum-risk movement engine scores 300 sampled destinations against an inverse-square risk field, dodging shots by detecting enemy energy drops and leading targets with linear-intercept aiming.
+      </p>
+      <p align="center">
+        <img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=openjdk&logoColor=white"/>
+        <img src="https://img.shields.io/badge/Robocode_API-333333?style=flat-square"/>
+        <img src="https://img.shields.io/badge/Finite_State_Machines-FF6F00?style=flat-square"/>
+      </p>
+      <p align="center">
+        <a href="https://github.com/HuuBen5334/Robocode">
+          <img src="https://img.shields.io/badge/View_Code-181717?style=for-the-badge&logo=github&logoColor=white" alt="View Code"/>
+        </a>
+      </p>
+    </td>
+    <td width="50%" valign="top">
+      <h3 align="center">🐟 FishSchooling Simulation</h3>
+      <p align="center">
+        <a href="https://github.com/HuuBen5334/FishSchooling">
+          <img src="https://github.com/user-attachments/assets/1bac9d65-154a-4b03-9257-5d022f44e2a8" alt="FishSchooling Simulation Demo" width="100%"/>
+        </a>
+      </p>
+      <p>
+        <strong>Simulation • 5 Tunable Species</strong><br/>
+        Flocking (alignment, cohesion, separation) on an interface-based steering system for autonomous 2D agents, with a dynamic UI of per-species sliders for real-time tuning in a predator–prey ecosystem. Built with a mixed Japanese–international team of 4 using Git branching and pull requests.
+      </p>
+      <p align="center">
+        <img src="https://img.shields.io/badge/C%23-239120?style=flat-square&logo=c-sharp&logoColor=white"/>
+        <img src="https://img.shields.io/badge/Godot_Engine-478CBF?style=flat-square&logo=godot-engine&logoColor=white"/>
+        <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white"/>
+      </p>
+      <p align="center">
+        <a href="https://github.com/HuuBen5334/FishSchooling">
+          <img src="https://img.shields.io/badge/View_Code-181717?style=for-the-badge&logo=github&logoColor=white" alt="View Code"/>
+        </a>
+      </p>
+    </td>
+  </tr>
+</table>
