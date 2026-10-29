@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>🎓 Computer Engineering @ University of Florida</h1>
+  <h1>Computer Engineering @ University of Florida</h1>
   <p><strong>RTOS • System Design • Embedded Systems • PCB Design</strong></p>
   
   <p>
@@ -19,7 +19,7 @@
     <td width="50%" valign="top">
       <h3 align="center">🔊 Portable Bluetooth Speaker</h3>
       <p align="center">
-        <a href="https://huuben5334.github.io/">
+        <a href="https://github.com/HuuBen5334/ESP32-Bluetooth-Speaker">
           <img src="https://github.com/user-attachments/assets/c8ebdb1b-2870-409e-8d10-a3985adae2c2" alt="Portable Bluetooth Speaker" width="100%"/>
         </a>
       </p>
@@ -34,8 +34,8 @@
         <img src="https://img.shields.io/badge/SolidWorks-DA291C?style=flat-square&logo=dassaultsystemes&logoColor=white"/>
       </p>
       <p align="center">
-        <a href="https://huuben5334.github.io/">
-          <img src="https://img.shields.io/badge/Design_Report-0066CC?style=for-the-badge&logo=readthedocs&logoColor=white" alt="Design Report"/>
+        <a href="https://github.com/HuuBen5334/ESP32-Bluetooth-Speaker">
+          <img src="https://img.shields.io/badge/View_Code-181717?style=for-the-badge&logo=github&logoColor=white" alt="View Code"/>
         </a>
       </p>
     </td>
